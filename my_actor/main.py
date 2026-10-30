@@ -18,7 +18,7 @@ import pandas as pd
 import sklearn
 from apify import Actor
 
-RUTA_MODELO = Path(__file__).resolve().parent.parent / 'modelo_nids.pkl'
+RUTA_MODELO = Path(__file__).resolve().parent.parent / 'modelo_full.pkl'
 
 # Columnas de texto. El resto de columnas de entrada del modelo son numéricas.
 COLUMNAS_CATEGORICAS = {'protocol_type', 'flag', 'service'}
