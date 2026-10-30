@@ -18,7 +18,8 @@ import pandas as pd
 import sklearn
 from apify import Actor
 
-RUTA_MODELO = Path(__file__).resolve().parent.parent / 'modelo_full.pkl'
+ARCHIVO_MODELO = 'modelo_full.pkl'
+RUTA_MODELO = Path(__file__).parent
 
 # Columnas de texto. El resto de columnas de entrada del modelo son numéricas.
 COLUMNAS_CATEGORICAS = {'protocol_type', 'flag', 'service'}
@@ -104,7 +105,7 @@ async def main() -> None:
             await Actor.fail(status_message='"umbralAtaque" debe estar entre 0 y 1')
             return
 
-        paquete = joblib.load(RUTA_MODELO)
+        paquete = joblib.load(RUTA_MODELO / ARCHIVO_MODELO)
         if paquete['sklearn_version'] != sklearn.__version__:
             Actor.log.warning(
                 f'El modelo se entrenó con scikit-learn {paquete["sklearn_version"]} '
