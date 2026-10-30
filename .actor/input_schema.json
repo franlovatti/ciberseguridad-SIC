@@ -1,8 +1,82 @@
 {
-    "$schema": "https://apify.com/schemas/v1/input.ide.json",
-    "title": "Actor input",
+    "title": "Clasificador de intrusiones en red (NSL-KDD)",
+    "description": "Recibe una lista de conexiones de red (una por fila de la Sheet) y devuelve, para cada una, si es un ataque, la probabilidad y la categoría de amenaza.",
     "type": "object",
     "schemaVersion": 1,
-    "properties": {},
-    "required": []
+    "properties": {
+        "conexiones": {
+            "title": "Conexiones de red",
+            "type": "array",
+            "description": "Lista de conexiones en JSON. Cada objeto es una fila de la Sheet con las 24 columnas del modelo (ver README). El campo opcional \"id\" se devuelve tal cual en la salida, por ejemplo el número de fila de la Sheet, para poder unir resultados con filas.",
+            "editor": "json",
+            "minItems": 1,
+            "maxItems": 5000,
+            "prefill": [
+                {
+                    "id": 2,
+                    "count": 1,
+                    "srv_count": 1,
+                    "serror_rate": 0.0,
+                    "srv_serror_rate": 0.0,
+                    "rerror_rate": 0.0,
+                    "srv_rerror_rate": 0.0,
+                    "same_srv_rate": 1.0,
+                    "diff_srv_rate": 0.0,
+                    "srv_diff_host_rate": 0.0,
+                    "duration": 0,
+                    "src_bytes": 232,
+                    "dst_bytes": 8153,
+                    "logged_in": 1,
+                    "num_failed_logins": 0,
+                    "root_shell": 0,
+                    "su_attempted": 0,
+                    "dst_host_count": 5,
+                    "dst_host_srv_count": 5,
+                    "dst_host_same_srv_rate": 1.0,
+                    "dst_host_diff_srv_rate": 0.0,
+                    "dst_host_serror_rate": 0.2,
+                    "protocol_type": "tcp",
+                    "flag": "SF",
+                    "service": "http"
+                },
+                {
+                    "id": 3,
+                    "count": 229,
+                    "srv_count": 10,
+                    "serror_rate": 1.0,
+                    "srv_serror_rate": 1.0,
+                    "rerror_rate": 0.0,
+                    "srv_rerror_rate": 0.0,
+                    "same_srv_rate": 0.04,
+                    "diff_srv_rate": 0.06,
+                    "srv_diff_host_rate": 0.0,
+                    "duration": 0,
+                    "src_bytes": 0,
+                    "dst_bytes": 0,
+                    "logged_in": 0,
+                    "num_failed_logins": 0,
+                    "root_shell": 0,
+                    "su_attempted": 0,
+                    "dst_host_count": 255,
+                    "dst_host_srv_count": 10,
+                    "dst_host_same_srv_rate": 0.04,
+                    "dst_host_diff_srv_rate": 0.06,
+                    "dst_host_serror_rate": 1.0,
+                    "protocol_type": "tcp",
+                    "flag": "S0",
+                    "service": "private"
+                }
+            ]
+        },
+        "umbralAtaque": {
+            "title": "Umbral de ataque",
+            "type": "number",
+            "description": "Una conexión se marca como ataque (es_ataque = true) si su probabilidad de ataque es mayor o igual a este valor. Bajarlo detecta más ataques pero genera más falsas alarmas.",
+            "editor": "number",
+            "default": 0.5,
+            "minimum": 0,
+            "maximum": 1
+        }
+    },
+    "required": ["conexiones"]
 }

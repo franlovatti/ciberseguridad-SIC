@@ -1,4 +1,6 @@
-# Feel free to add your Python dependencies below. For formatting guidelines, see:
-# https://pip.pypa.io/en/latest/reference/requirements-file-format/
-
-apify >= 4.0.0, < 5.0.0
+apify>=2.0,<5
+pandas
+joblib
+# IMPORTANTE: poné acá la MISMA versión de scikit-learn con la que generaste el .pkl en tu PC
+# (verla con: pip show scikit-learn). Si no coincide, el modelo puede fallar al cargarse.
+scikit-learn==1.9.1
